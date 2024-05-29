@@ -1,7 +1,9 @@
-package eu.playsc.minesofmystery.common;
+package eu.playsc.minesofmystery.common.listeners;
 
 import eu.playsc.minesofmystery.MinesOfMystery;
-import eu.playsc.minesofmystery.annotations.AutoRegister;
+import eu.playsc.minesofmystery.common.Common;
+import eu.playsc.minesofmystery.common.LogLevel;
+import eu.playsc.minesofmystery.listeners.AutoRegister;
 import org.bukkit.event.Listener;
 import org.reflections.Reflections;
 

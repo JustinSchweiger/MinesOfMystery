@@ -99,8 +99,6 @@ public class ResourcepackManager {
 	}
 
 	public void zipResources() {
-		Common.log("Zipping resources...");
-
 		final File targetFolder = new File(MinesOfMystery.getInstance().getDataFolder(), "resources");
 
 		if (RESOURCEPACK.exists())
@@ -128,7 +126,7 @@ public class ResourcepackManager {
 			// Add a pack.mcmeta file with the pack format
 			final ZipEntry zipEntry = new ZipEntry("pack.mcmeta");
 			zipOutputStream.putNextEntry(zipEntry);
-			zipOutputStream.write("{\"pack\":{\"pack_format\":23,\"description\":\"&6Mines of Mystery Resources\"}}".getBytes());
+			zipOutputStream.write("{\"pack\":{\"pack_format\":23,\"description\":\"Mines of Mystery Resources\"}}".getBytes());
 			zipOutputStream.closeEntry();
 
 			// Add the logo
@@ -174,6 +172,10 @@ public class ResourcepackManager {
 		this.zipResources();
 		generateHash();
 
+		if (Bukkit.getServer().getOnlinePlayers().isEmpty())
+			return;
+
+		Common.log("Sending resourcepack to [" + Bukkit.getServer().getOnlinePlayers().size() + "] online players...");
 		serve(Bukkit.getServer().getOnlinePlayers());
 	}
 

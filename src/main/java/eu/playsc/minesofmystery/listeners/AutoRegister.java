@@ -1,4 +1,4 @@
-package eu.playsc.minesofmystery.annotations;
+package eu.playsc.minesofmystery.listeners;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
