@@ -111,5 +111,12 @@ buildNumber.properties
 
 # Common working directory
 run/
+
+# Minecraft Stuff
 /server/
 .paper-nms/
+
+# Resources
+/src/main/resources/assets/minesofmystery/font/*.json
+!/src/main/resources/assets/minesofmystery/font/spaces.json
+/src/main/resources/assets/minecraft/models/item/*.json

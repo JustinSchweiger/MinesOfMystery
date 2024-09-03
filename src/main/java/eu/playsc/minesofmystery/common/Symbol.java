@@ -31,15 +31,19 @@ public enum Symbol {
 	}
 
 	public Component get() {
-		return this.get(Colors.WHITE);
+		return this.get(Color.WHITE);
 	}
 
 	public Component get(final TextColor color, final String text) {
 		return Component.text(this.symbol + " " + text).color(color);
 	}
 
+	public Component get(final TextColor color, final Component text) {
+		return Component.text(this.symbol + " ").color(color).append(text);
+	}
+
 	public Component get(final String text) {
-		return this.get(Colors.WHITE, text);
+		return this.get(Color.WHITE, text);
 	}
 
 	public Component getShifted(final TextColor color, final String text) {
@@ -47,7 +51,7 @@ public enum Symbol {
 	}
 
 	public Component getShifted(final String text) {
-		return this.getShifted(Colors.WHITE, text);
+		return this.getShifted(Color.WHITE, text);
 	}
 
 	public Component getNoSpace(final TextColor color, final String text) {
@@ -55,7 +59,7 @@ public enum Symbol {
 	}
 
 	public Component getNoSpace(final String text) {
-		return this.getNoSpace(Colors.WHITE, text);
+		return this.getNoSpace(Color.WHITE, text);
 	}
 
 	public String getSymbol() {

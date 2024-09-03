@@ -5,25 +5,11 @@ import lombok.NoArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
+import java.util.Formatter;
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Common {
 	public static final String LOG_PREFIX = "§8[§6MinesOfMystery§8] ";
-
-	public static void log(final String message, final Exception e) {
-		log(message + " " + e.getMessage(), LogLevel.EXCEPTION, true);
-	}
-
-	public static void log(final String message, final Exception e, boolean showPrefix) {
-		log(message + " " + e.getMessage(), LogLevel.EXCEPTION, showPrefix);
-	}
-
-	public static void log(final Exception e) {
-		log(e.getMessage(), LogLevel.EXCEPTION, true);
-	}
-
-	public static void log(Exception e, boolean showPrefix) {
-		log(e.getMessage(), LogLevel.EXCEPTION, showPrefix);
-	}
 
 	public static void log(final String message) {
 		log(message, LogLevel.INFO, true);
@@ -33,13 +19,12 @@ public class Common {
 		log(message, logLevel, true);
 	}
 
-	public static void log(final String message, boolean showPrefix) {
+	public static void log(final String message, final boolean showPrefix) {
 		log(message, LogLevel.INFO, showPrefix);
 	}
 
 	private static void log(String message, final LogLevel logLevel, final boolean showPrefix) {
 		final CommandSender console = Bukkit.getConsoleSender();
-		Valid.checkNotNull(console, "Console sender is null!");
 
 		if (message == null || message.isEmpty()) {
 			return;
@@ -52,15 +37,24 @@ public class Common {
 		console.sendMessage(logLevel.getColor() + message);
 	}
 
-	public static void throwError(final String message) {
-		throw new RuntimeException(message);
+	public static String escapeUnicode(final String input) {
+		final StringBuilder b = new StringBuilder(input.length());
+		final Formatter f = new Formatter(b);
+		for (final char c : input.toCharArray()) {
+			if (c < 128) {
+				b.append(c);
+			} else {
+				f.format("\\u%04x", (int) c);
+			}
+		}
+		return b.toString();
 	}
 
-	public static void throwError(final String message, final Exception e) {
+	public static void error(final String message, final Exception e) {
 		throw new RuntimeException(message, e);
 	}
 
-	public static void throwError(final Exception e) {
+	public static void error(final Throwable e) {
 		throw new RuntimeException(e);
 	}
 }

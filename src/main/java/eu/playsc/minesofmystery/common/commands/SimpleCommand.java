@@ -44,7 +44,7 @@ public abstract class SimpleCommand {
 				simpleCommand.getCommand().register();
 				registeredCommands.add(simpleCommand);
 			} catch (final Exception e) {
-				Common.log("Failed to register command: " + command.getSimpleName() + "!", e);
+				Common.error("Failed to register command: " + command.getSimpleName() + "!", e);
 			}
 		});
 
@@ -96,8 +96,7 @@ public abstract class SimpleCommand {
 		private final boolean unregisterNamespaces;
 
 		public VanillaUnregister(final String command) {
-			this.command = command;
-			this.unregisterNamespaces = false;
+			this(command, false);
 		}
 
 		public VanillaUnregister(final String command, final boolean unregisterNamespaces) {

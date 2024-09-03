@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>eu.playsc</groupId>
-	<artifactId>MinesOfMystery</artifactId>
+	<artifactId>minesofmystery</artifactId>
 	<name>MinesOfMystery</name>
 	<version>1.0</version>
 	<packaging>jar</packaging>
@@ -36,6 +36,10 @@
 			<id>codemc-repo</id>
 			<url>https://repo.codemc.io/repository/maven-public/</url>
 		</repository>
+		<repository>
+			<id>sk89q-repo</id>
+			<url>https://maven.enginehub.org/repo/</url>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>
@@ -44,6 +48,18 @@
 			<url>https://repo.bytecode.space/repository/maven-public/</url>
 		</pluginRepository>
 	</pluginRepositories>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.intellectualsites.bom</groupId>
+				<artifactId>bom-newest</artifactId> <!--  Ref: https://github.com/IntellectualSites/bom -->
+				<version>1.40</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 		<!-- Paper -->
@@ -84,6 +100,16 @@
 			<artifactId>json</artifactId>
 			<version>20240205</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jetbrains</groupId>
+			<artifactId>annotations</artifactId>
+			<version>24.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.orm</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>6.5.2.Final</version>
+		</dependency>
 
 		<!-- Reflection -->
 		<dependency>
@@ -97,7 +123,7 @@
 			<version>3.28.0-GA</version>
 		</dependency>
 
-		<!-- Mojang Brigadier for Spigot library -->
+		<!-- Commands Library -->
 		<dependency>
 			<groupId>dev.jorel</groupId>
 			<artifactId>commandapi-bukkit-shade</artifactId>
@@ -105,7 +131,7 @@
 			<scope>compile</scope>
 		</dependency>
 
-		<!-- Inventory GUI lib -->
+		<!-- Inventory GUI Library -->
 		<dependency>
 			<groupId>com.github.stefvanschie.inventoryframework</groupId>
 			<artifactId>IF</artifactId>
@@ -119,18 +145,29 @@
 			<version>4.1.0</version>
 		</dependency>
 
-		<!-- NBTApi -->
-		<dependency>
-			<groupId>de.tr7zw</groupId>
-			<artifactId>item-nbt-api</artifactId>
-			<version>2.12.4</version>
-		</dependency>
-
 		<!-- FastBoard -->
 		<dependency>
 			<groupId>fr.mrmicky</groupId>
 			<artifactId>fastboard</artifactId>
 			<version>2.0.2</version>
+		</dependency>
+
+		<!-- WorldEdit -->
+		<dependency>
+			<groupId>com.fastasyncworldedit</groupId>
+			<artifactId>FastAsyncWorldEdit-Core</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.fastasyncworldedit</groupId>
+			<artifactId>FastAsyncWorldEdit-Bukkit</artifactId>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>FastAsyncWorldEdit-Core</artifactId>
+					<groupId>*</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 
@@ -183,19 +220,6 @@
 				</executions>
 				<configuration>
 					<createDependencyReducedPom>false</createDependencyReducedPom>
-					<artifactSet>
-						<includes>
-							<include>org.reflections:reflections*</include>
-							<include>org.javassist:javassist*</include>
-							<include>org.json:json*</include>
-							<include>fr.mrmicky:fastboard*</include>
-							<include>dev.jorel:commandapi-bukkit-shade*</include>
-							<include>com.github.stefvanschie.inventoryframework:IF*</include>
-							<include>com.github.fierioziy.particlenativeapi:ParticleNativeAPI-core*</include>
-							<include>de.tr7zw:item-nbt-api*</include>
-							<include>org.nanohttpd:nanohttpd*</include>
-						</includes>
-					</artifactSet>
 					<relocations>
 						<relocation>
 							<pattern>org.reflections</pattern>
@@ -229,6 +253,10 @@
 							<pattern>org.nanohttpd</pattern>
 							<shadedPattern>${project.groupId}.${project.artifactId}.lib.nanohttpd</shadedPattern>
 						</relocation>
+						<relocation>
+							<pattern>org.hibernate</pattern>
+							<shadedPattern>${project.groupId}.${project.artifactId}.lib.hibernate</shadedPattern>
+						</relocation>
 					</relocations>
 				</configuration>
 			</plugin>
@@ -239,6 +267,7 @@
 				<configuration>
 					<nonFilteredFileExtensions>
 						<nonFilteredFileExtension>ogg</nonFilteredFileExtension>
+						<nonFilteredFileExtension>json</nonFilteredFileExtension>
 					</nonFilteredFileExtensions>
 				</configuration>
 			</plugin>

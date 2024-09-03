@@ -1,4 +1,0 @@
-name: MinesOfMystery
-version: '${project.version}'
-main: eu.playsc.minesofmystery.MinesOfMystery
-api-version: '1.20'
